@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficas de CSV</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 50%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gráficas de CSV</h1>
+    <div id="charts"></div>
+
+    <script>
+        function createCharts(data) {
+            const chartContainer = document.getElementById('charts');
+            chartContainer.innerHTML = ''; // Clear previous charts
+
+            for (const column in data) {
+                const counts = data[column];
+
+                const labels = Object.keys(counts);
+                const values = Object.values(counts);
+
+                const canvas = document.createElement('canvas');
+                canvas.classList.add('chart-container');
+                chartContainer.appendChild(canvas);
+
+                new Chart(canvas, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: `Frecuencia de ${column}`,
+                            data: values,
+                            backgroundColor: 'rgba(0, 138, 139)',
+                            borderColor: 'rgba(0, 138, 139,1)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = {{ chart_data|tojson }};
+            createCharts(data);
+        });
+    </script>
+</body>
+</html>

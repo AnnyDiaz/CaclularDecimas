@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Cargar Archivo CSV</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    
+  <div class="container mt-5">
+   <h1 class="mb-1s">Cargar Archivo CSV</h1>
+    <form method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="file">Selecciona un archivo CSV</label>
+        <input type="file" class="form-control-file" id="file" name="file">
+      </div>
+      <button type="submit" class="btn btn-primary">Cargar y Procesar</button>
+    </form>
+    {% if filename %}
+      <p>Archivo cargado: {{ filename }}</p>
+      <a href="{{ url_for('grafica', filename=filename) }}" class="btn btn-secondary mt-3">Ver Gráficas</a>
+    {% endif %}
+
+    {% if table_html %}
+      <h2      class="mt-5">Tabla de Datos</h2>
+      <div class="table-responsive">
+        {{ table_html|safe }}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
